@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfScheduler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:local="clr-namespace:WpfScheduler"
+        xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
+        WindowStartupLocation="CenterScreen" >
+    <Window.DataContext>
+        <local:SchedulerViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <syncfusion:SfScheduler x:Name="Schedule"
+                                Grid.Row="1"
+                                FirstDayOfWeek="Monday"
+                                ViewType="Week"
+                                ItemsSource="{Binding ScheduleAppointmentCollection}">
+        </syncfusion:SfScheduler>
+        <interactivity:Interaction.Behaviors>
+            <local:SchedulerBehavior/>
+        </interactivity:Interaction.Behaviors>
+    </Grid>
+</Window>
