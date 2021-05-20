@@ -48,7 +48,7 @@ namespace WpfScheduler.Helper
                 this.ReminderList.ItemsSource = (IList)appointment.Reminders;
                 this.ReminderList.ItemContainerGenerator.StatusChanged += this.OnListViewItemGeneratorStatusChanged;
                 this.timeZone.IsChecked = (appointment.StartTimeZone != null);
-                if((bool)this.timeZone.IsChecked)
+                if ((bool)this.timeZone.IsChecked)
                 {
                     this.TimeZoneMenu.Text = appointment.StartTimeZone.ToString();
                 }
@@ -111,12 +111,12 @@ namespace WpfScheduler.Helper
             };
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void OnCancelClicked(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void OnSaveClicked(object sender, RoutedEventArgs e)
         {
             if (appointment == null)
             {
@@ -127,8 +127,8 @@ namespace WpfScheduler.Helper
                 scheduleAppointment.Location = this.location.Text;
                 scheduleAppointment.IsAllDay = (bool)this.allDay.IsChecked;
                 scheduleAppointment.Notes = this.description.Text;
-                scheduleAppointment.Reminders=(ObservableCollection<SchedulerReminder>)this.ReminderList.ItemsSource;
-                
+                scheduleAppointment.Reminders = (ObservableCollection<SchedulerReminder>)this.ReminderList.ItemsSource;
+
                 if ((bool)this.timeZone.IsChecked)
                 {
                     scheduleAppointment.StartTimeZone = this.TimeZoneMenu.Text;
@@ -159,13 +159,13 @@ namespace WpfScheduler.Helper
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            this.Save.Click -= this.Save_Click;
-            this.Cancel.Click -= this.Cancel_Click;
+            this.Save.Click -= this.OnSaveClicked;
+            this.Cancel.Click -= this.OnCancelClicked;
             this.scheduler = null;
             this.appointment = null;
         }
 
-        private void addRememainder_Click(object sender, RoutedEventArgs e)
+        private void OnAddRememainderClicked(object sender, RoutedEventArgs e)
         {
 
             if (this.ReminderList != null)
@@ -210,26 +210,25 @@ namespace WpfScheduler.Helper
                 }
             }
         }
-        
-    private void RemoveReminder_Click(object sender, RoutedEventArgs e)
+        private void OnRemoveReminderClicked(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var reminderCollection = this.ReminderList.ItemsSource as IList;
             reminderCollection.Remove(button.DataContext as SchedulerReminder);
         }
 
-        private void timeZone_Checked(object sender, RoutedEventArgs e)
+        private void OnTimeZoneChecked(object sender, RoutedEventArgs e)
         {
-            if(this.timeZone.IsChecked==true)
-            this.TimeZoneMenuPanel.Visibility = Visibility.Visible;
+            if (this.timeZone.IsChecked == true)
+                this.TimeZoneMenuPanel.Visibility = Visibility.Visible;
             else
                 this.TimeZoneMenuPanel.Visibility = Visibility.Visible;
         }
 
-        private void Delete_Click(object sender, RoutedEventArgs e)
+        private void OnDeleteClicked(object sender, RoutedEventArgs e)
         {
-            if(appointment != null)
-            (this.scheduler.ItemsSource as ScheduleAppointmentCollection).Remove(appointment);
+            if (appointment != null)
+                (this.scheduler.ItemsSource as ScheduleAppointmentCollection).Remove(appointment);
             this.Close();
         }
     }
